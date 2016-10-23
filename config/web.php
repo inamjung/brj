@@ -23,7 +23,8 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            //'identityClass' => 'app\models\User',
+            'identityClass' => 'dektrium\user\models\User',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -46,6 +47,13 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
+        'db2'=>[
+            'class' => 'yii\db\Connection',
+                'dsn' => 'mysql:host=localhost;dbname=hos',
+                'username' => 'sa',
+                'password' => 'sa',
+                'charset' => 'utf8',
+                ]
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -56,6 +64,16 @@ $config = [
         */
     ],
     'modules'=>[
+        'user' => [
+        'class' => 'dektrium\user\Module',
+        'enableUnconfirmedLogin' => true,
+        'confirmWithin' => 21600,
+        'cost' => 12,
+        'admins' => ['admin']
+    ],
+        'hosreport' => [
+            'class' => 'app\modules\hosreport\Module',
+        ],
         'gridview'=>[
             'class'=>'\kartik\grid\Module'
         ]        
