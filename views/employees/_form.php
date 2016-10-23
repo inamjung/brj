@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\date\DatePicker;
+use kartik\checkbox\CheckboxX;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Employees */
@@ -12,27 +14,69 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-4">
+             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        </div>
+         <div class="col-xs-4 col-sm-4 col-md-4">
+            <?= $form->field($model, 'bd')->widget(DatePicker::className(),[
+                'language'=>'th',
+                'options'=>[
+                    'placholder'=>'<--ระบุวันเกิด-->'
+                ],
+                'pluginOptions'=>[
+                    'format'=>'yyyy-mm-dd',
+                    'todayHighligt'=>true
+                ]
+            ]) ?>
 
-    <?= $form->field($model, 'bd')->textInput() ?>
-
-    <?= $form->field($model, 'blood')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'cid')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'ex')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'sex')->dropDownList([ 'ชาย' => 'ชาย', 'หญิง' => 'หญิง', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'addr')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'social')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'marry')->textInput(['maxlength' => true]) ?>
+            
+        </div>
+         <div class="col-xs-4 col-sm-4 col-md-4">
+             <?= $form->field($model, 'blood')
+            ->dropDownList(\app\models\Employees::itemAlias('blood'),
+                    [
+                        'prompt'=>'<--ระบุหมู่เลือด-->'
+                    ]
+                    ) ?>
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-4">
+             <?= $form->field($model, 'cid')->textInput(['maxlength' => true]) ?>
+        </div>
+         <div class="col-xs-4 col-sm-4 col-md-4">
+             <?= $form->field($model, 'ex')->checkboxList(\app\models\Employees::itemAlias('ex')) ?>
+        </div>
+         <div class="col-xs-4 col-sm-4 col-md-4">
+             <?= $form->field($model, 'sex')->radioList([ 'ชาย' => 'ชาย', 'หญิง' => 'หญิง', ], ['prompt' => '']) ?>
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            <?= $form->field($model, 'addr')->textarea(['rows' => 6]) ?>
+        </div>
+         <div class="col-xs-4 col-sm-4 col-md-4">
+            <?= $form->field($model, 'tel')->widget(\yii\widgets\MaskedInput::classname(), [
+             'mask' => '999-999-9999',
+                ]) ?>
+        </div>
+         <div class="col-xs-4 col-sm-4 col-md-4">
+            <?= $form->field($model, 'social')->checkboxList(\app\models\Employees::itemAlias('social')) ?>
+        </div>
+    </div> 
+    <div class="row">        
+         <div class="col-xs-4 col-sm-4 col-md-4">
+           <?= $form->field($model, 'marry')->radioList(['1'=>'โสด','2'=>'แต่งงาน','3'=>'หม้าย']) ?>
+        </div>  
+        <div class="col-xs-4 col-sm-4 col-md-4">
+           <?= $form->field($model, 'status')->widget(\kartik\checkbox\CheckboxX::className(),[
+               'pluginOptions'=>[
+                   'threeState'=>FALSE
+               ]
+           ])->label('ยังมีชีวิตอยู่') ?>
+        </div>
+    </div> 
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

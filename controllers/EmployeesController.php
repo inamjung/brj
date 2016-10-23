@@ -8,6 +8,10 @@ use app\models\EmployeesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
+use yii\helpers\Url;
+use yii\helpers\BaseArrayHelper;
+use yii\helpers\ArrayHelper;
 
 /**
  * EmployeesController implements the CRUD actions for Employees model.
@@ -83,6 +87,8 @@ class EmployeesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+         $model->ex  = $model->getArray($model->ex);
+         $model->social  = $model->getArray($model->social);  
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
