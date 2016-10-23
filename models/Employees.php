@@ -3,10 +3,7 @@
 namespace app\models;
 
 use Yii;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\helpers\Json;
-use yii\db\Expression;
+
 /**
  * This is the model class for table "employees".
  *
@@ -22,25 +19,30 @@ use yii\db\Expression;
  * @property string $social
  * @property integer $status
  * @property string $marry
+ * @property integer $tmb_id
+ * @property integer $amp_id
+ * @property integer $chw_id
  */
-class Employees extends \yii\db\ActiveRecord {
-
+class Employees extends \yii\db\ActiveRecord
+{
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'employees';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['bd','ex','social'], 'safe'],
             [['sex', 'addr'], 'string'],
-            [['status'], 'integer'],
-            [['name',  'tel', 'marry'], 'string', 'max' => 255],
+            [['status', 'tmb_id', 'amp_id', 'chw_id'], 'integer'],
+            [['name', 'tel','marry'], 'string', 'max' => 255],
             [['blood'], 'string', 'max' => 2],
             [['cid'], 'string', 'max' => 13],
         ];
@@ -49,31 +51,32 @@ class Employees extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => 'ID',
-            'name' => 'ชื่อ-สุกล',
-            'bd' => 'อายุ',
-            'blood' => 'กรุ๊ปเลือด',
-            'cid' => 'Cid',
+            'name' => 'ชื่อ-สกุล',
+            'bd' => 'วันเกิด',
+            'blood' => 'หมู่เลือด',
+            'cid' => 'CID',
             'ex' => 'ประสบการณ์',
             'sex' => 'เพศ',
             'addr' => 'ที่อยู่',
             'tel' => 'Tel',
             'social' => 'Social',
-            'status' => 'Status',
-            'marry' => 'สถานะ',
+            'status' => 'สถานะ',
+            'marry' => 'สถานภาพ',
+            'tmb_id' => 'ตำบล',
+            'amp_id' => 'อำเภอ',
+            'chw_id' => 'จังหวัด',
         ];
     }
-    
     public function getArray($value) {
         return explode(',', $value);
     }
-
     public function setToArray($value) {
         return is_array($value) ? implode(',', $value) : NULL;
     }
-
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
             if (!empty($this->ex)) {
@@ -88,7 +91,6 @@ class Employees extends \yii\db\ActiveRecord {
         }
                 
     }
-
     public static function itemAlias($type, $code = NULL) {
         $_items = array(
             'blood'=> array(
@@ -111,8 +113,6 @@ class Employees extends \yii\db\ActiveRecord {
                 
             ),
         );
-
-
         if (isset($code)) {
             return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
         } else {

@@ -10,9 +10,9 @@ use kartik\grid\GridView;
 $this->title = 'Employees';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
 <div class="employees-index">
-  <!--    <h1><?= Html::encode($this->title) ?></h1>-->
+
+    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -20,7 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <div class="panel panel-success">
         <div class="panel-heading"> รายชื่อพนักงาน</div>
-        <div class="panel-body">            
+        <div class="panel-body">     
+
             <?=
             GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -42,10 +43,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'status',
                     ],
                     'marry',
+                    'tmb_id',
+                    'amp_id',
+                    'chw_id',
                     ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]);
             ?>
         </div>
     </div>
-</div>
+</div>        

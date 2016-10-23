@@ -65,10 +65,9 @@ class EmployeesController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+   public function actionCreate()
     {
         $model = new Employees();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
            // return $this->redirect(['view', 'id' => $model->id]);
             return $this->redirect(['index']);
@@ -90,7 +89,6 @@ class EmployeesController extends Controller
         $model = $this->findModel($id);   
         $model->ex = $model->getArray($model->ex);
         $model->social = $model->getArray($model->social);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //return $this->redirect(['view', 'id' => $model->id]);
             return $this->redirect(['index']);

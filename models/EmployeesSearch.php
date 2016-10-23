@@ -18,7 +18,7 @@ class EmployeesSearch extends Employees
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
+            [['id', 'status', 'tmb_id', 'amp_id', 'chw_id'], 'integer'],
             [['name', 'bd', 'blood', 'cid', 'ex', 'sex', 'addr', 'tel', 'social', 'marry'], 'safe'],
         ];
     }
@@ -62,6 +62,9 @@ class EmployeesSearch extends Employees
             'id' => $this->id,
             'bd' => $this->bd,
             'status' => $this->status,
+            'tmb_id' => $this->tmb_id,
+            'amp_id' => $this->amp_id,
+            'chw_id' => $this->chw_id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
