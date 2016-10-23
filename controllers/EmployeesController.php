@@ -70,7 +70,8 @@ class EmployeesController extends Controller
         $model = new Employees();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           // return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -86,12 +87,13 @@ class EmployeesController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-         $model->ex  = $model->getArray($model->ex);
-         $model->social  = $model->getArray($model->social);  
+        $model = $this->findModel($id);   
+        $model->ex = $model->getArray($model->ex);
+        $model->social = $model->getArray($model->social);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            //return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
