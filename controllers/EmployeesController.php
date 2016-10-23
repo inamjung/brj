@@ -12,6 +12,11 @@ use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\helpers\BaseArrayHelper;
 use yii\helpers\ArrayHelper;
+use kartik\widgets\DepDrop;
+use yii\helpers\Html;
+use app\models\Chw;
+use app\models\Amp;
+use app\models\Tmb;
 
 /**
  * EmployeesController implements the CRUD actions for Employees model.
@@ -126,5 +131,48 @@ class EmployeesController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+     public function actionGetAmp(){
+        $out = [];
+        if (isset($_POST['depdrop_parents'])){
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != NULL){
+                $chw_id = $parents[0];
+                $out = $this->getAmp($chw_id);
+                echo Json::encode(['output'=>$out, 'selected'=>'']);
+                return;
+            }
+        }
+        echo Json::encode(['output'=>'', 'selected'=>'']);
+    }    
+    public function actionGetTmb(){
+        $out = [];
+        if (isset($_POST['depdrop_parents'])){
+            $ids = $_POST['depdrop_parents'];
+            $chw_id = empty($ids[0]) ? NULL : $ids[0];
+            $amp_id = empty($ids[1]) ? NULL : $ids[1];
+            if ($chw_id !=NULL){
+                $data = $this->getTmb($amp_id);
+                echo Json::encode(['output'=>$data, 'selected'=>'']);
+                return;
+            }
+        }
+        echo Json::encode(['output'=>'', 'selected'=>'']);
+    }     
+    protected function getAmp($id){
+        $datas = Amp::find()->where(['chw_id'=>$id])->all();
+        return $this->MapData($datas,'id','name');
+    }
+    
+    protected function getTmb($id){
+        $datas = Tmb::find()->where(['amp_id'=>$id])->orderBy('name ASC')->all();
+        return $this->MapData($datas,'id','name');
+    }    
+    protected function MapData($datas,$fieldID,$fieldName){
+        $obj = [];
+        foreach ($datas as $key => $value){
+            array_push($obj, ['id'=>$value->{$fieldID},'name'=>$value->{$fieldName}]);
+        }
+        return $obj;
     }
 }
