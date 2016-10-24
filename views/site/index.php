@@ -6,7 +6,7 @@ use yii\helpers\Html;
 $this->title = 'BRJ-HOSPITAL';
 ?>
 <div class="site-index">
-<?php echo Html::img('@web/images/brj.jpg',
+<?php echo Html::img('@web/images/brj.png',
         ['class'=>'img-responsive center-block img-round']
         )?>
     

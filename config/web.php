@@ -4,6 +4,7 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'id' => 'basic',
+    'name'=>'<img style="height:40px; margin-top:12px;" src="./images/brj.png"> BRJ',
     'language'=>'th',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
