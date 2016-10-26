@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2016-10-24 01:57:47
+Date: 2016-10-27 00:14:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1183,7 +1183,7 @@ CREATE TABLE `employees` (
 -- ----------------------------
 -- Records of employees
 -- ----------------------------
-INSERT INTO `employees` VALUES ('1', 'นายสมชาย เข็มทิศ', '2016-10-13', 'a', '2222222222222', 'php,yii,access', 'ชาย', '', '000-000-0000', 'line,google,msn', '1', 'แต่งงาน', null, null, null);
+INSERT INTO `employees` VALUES ('1', 'นายสมชาย เข็มทิศ', '2016-10-13', 'a', '2222222222222', 'php,yii,access', 'ชาย', '', '000-000-0000', 'line,google,msn', '1', 'แต่งงาน', '19', '2', '1');
 INSERT INTO `employees` VALUES ('2', 'ไอน้ำ  เรืองโพน', '1974-07-18', 'o', '1111111111111', 'php,yii,access', 'หญิง', 'รพ.ศรีวิไล', '091-363-8928', 'fb,line,msn', '1', 'โสด', null, null, null);
 INSERT INTO `employees` VALUES ('3', 'นางสังคม  ชาวไทย', '1998-12-01', 'ab', '5555555555555', 'access', 'หญิง', '255 หมู่ 6', '555-555-5555', 'fb,msn', '1', 'หม้าย', null, null, null);
 
@@ -10217,6 +10217,10 @@ CREATE TABLE `user` (
   `updated_at` int(11) NOT NULL,
   `registration_ip` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `role` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `department_id` int(11) DEFAULT NULL COMMENT 'แผนก',
+  `depname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ชื่อแผนก',
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ชื่อ-สกุล',
+  `avatar` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'รูปประจำตัว',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_unique_username` (`username`) USING BTREE,
   UNIQUE KEY `user_unique_email` (`email`) USING BTREE,
@@ -10227,4 +10231,4 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', 'admin@localhost.com', '$2y$12$UsVYHIQ.PvIAuBY8PyOLBevUh11R082DiJhC4YmW69pZWAoT4hl/S', 'zyeAgDsjvFSkY4XHZgqAgz33uYnMGBP3', null, null, null, null, null, null, null, null, null, null, '1477246903', '1477246903', '::1', '1');
+INSERT INTO `user` VALUES ('1', 'admin', 'admin@localhost.com', '$2y$12$UsVYHIQ.PvIAuBY8PyOLBevUh11R082DiJhC4YmW69pZWAoT4hl/S', 'zyeAgDsjvFSkY4XHZgqAgz33uYnMGBP3', null, null, null, null, null, null, null, null, null, null, '1477246903', '1477246903', '::1', '1', '2', 'งานบริหารทั่วไป', 'Administrator', '155.jpg');
