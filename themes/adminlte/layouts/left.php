@@ -1,12 +1,20 @@
 <?php
     use yii\helpers\Url;
     use yii\bootstrap\Nav;
+    use yii\helpers\Html;
 ?>
 
 <aside class="main-sidebar">
 
     <section class="sidebar">
+ <?php if(!Yii::$app->user->isGuest){ ?>         
+<div class="pull-left image">
+    <?= Html::img('avatars/' . Yii::$app->user->identity->avatar,
+            ['class' => 'img-circle', 'width' => '40px;'])
+    ?>                
 
+</div>
+  <?php } ?>
         <!-- Sidebar user panel -->
         <?=
         Nav::widget(
