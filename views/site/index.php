@@ -18,7 +18,75 @@ $this->title = 'BRJ-HOSPITAL';
         <div class="col-md-6">     
             <div id="chart2"></div>                    
         </div>
-    </div> 
+</div>
+    <hr>
+
+    <div class="row">
+        
+               <div class="col-md-6">  
+                   <div class="panel panel-primary">
+            <div class="panel-heading"> ตารางจาก db3</div>
+            <div class="panel-body">
+           <?php
+            $sql = "select year(date) year,month(date) month
+                    ,concat(month(date),'-' ,year(date)) my
+                    ,sum(if(type='Getopd',amount,0)) Getopd 
+                    ,sum(if(type='Getipd',amount,0)) Getipd
+                    ,sum(if(type='Pay',amount,0)) Pay
+                    ,sum(if(type='Getopd',amount,0)) + sum(if(type='Getipd',amount,0)) allget
+                    from (
+                    select 'Pay' as type,date_instock date,amount
+                    from receive r
+                    where r.date_instock between '2015-10-1' and  '2016-9-30' and r.type_id='1'
+                    union all
+                    select 'Getopd' as type,vstdate,inc_drug
+                    from hos.vn_stat 
+                    where vstdate between '2015-10-1' and  '2016-9-30'
+                    union all
+                    select 'Getipd' as type,dchdate,inc12
+                    from hos.an_stat 
+                    where dchdate between '2015-10-1' and  '2016-9-30'
+                    ) a
+                    group by year,month";
+            
+                    $rawData = Yii::$app->db3->createcommand($sql)->queryAll();
+                    
+                    if(!empty($rawData[0])){
+                        $cols = array_keys($rawData[0]);
+                    }
+        $data_grid = new \yii\data\ArrayDataProvider([
+        //'key' => 'hoscode',
+        'allModels' => $rawData,
+        'sort' => !empty($cols) ? [ 'attributes' => $cols] : FALSE,
+        'pagination' => FALSE,
+    ]);
+
+    echo \kartik\grid\GridView::widget([
+        'dataProvider' => $data_grid,
+        'summary' => "",
+        'formatter' => ['class' => 'yii\i18n\Formatter', 'nullDisplay' => '0'],
+        'hover'=>TRUE,
+        'striped'=>FALSE,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'year',
+            'Getopd',
+            'Getipd',
+            ],
+    ]);
+  
+            
+            
+           ?>
+            
+                               
+        </div> 
+            </div>
+        </div>
+        
+    </div>    
+    
     <div style="display: none">
     <?=
         Highcharts::widget([
@@ -143,9 +211,6 @@ $this->registerJs("$(function () {
 </div>
 
 
-
-
-
     
     
-</div>
+
