@@ -110,7 +110,7 @@ $this->registerJs("$(function () {
             type: 'pie'
         },
         title: {
-            text: 'สรุปการซ่อมตามแผนก'
+            text: 'ประเภทที่รับเข้าระบบ'
         },
         xAxis: {
             type: 'category'
