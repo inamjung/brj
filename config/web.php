@@ -54,6 +54,13 @@ $config = [
                 'username' => 'sa',
                 'password' => 'sa',
                 'charset' => 'utf8',
+                ],
+        'db3'=>[
+            'class' => 'yii\db\Connection',
+                'dsn' => 'mysql:host=localhost;dbname=ibudget',
+                'username' => 'sa',
+                'password' => 'sa',
+                'charset' => 'utf8',
                 ]
         /*
         'urlManager' => [
